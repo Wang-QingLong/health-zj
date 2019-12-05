@@ -1,0 +1,40 @@
+在实际开发中，我们会有很多处理不同功能的服务器。例如：
+
+应用服务器：负责部署我们的应用
+
+数据库服务器：运行我们的数据库
+
+文件服务器：负责存储用户上传文件的服务器
+
+分服务器处理的目的是让服务器各司其职，从而提高我们项目的运行效率。
+
+常见的图片存储方案：
+
+方案一：使用nginx搭建图片服务器
+
+方案二：使用开源的分布式文件存储系统，例如Fastdfs、HDFS等
+
+方案三：使用云存储，例如阿里云、七牛云等
+
+--------------下面介绍七牛云----------
+官网：https://www.qiniu.com/
+
+要使用七牛云的服务，首先需要注册成为会员。地址：https://portal.qiniu.com/signup
+
+可以通过七牛云提供的开发者中心学习如何操作七牛云服务，地址：https://developer.qiniu.com/
+点击对象存储，跳转到对象存储开发页面，地址：https://developer.qiniu.com/kodo
+七牛云提供了多种方式操作对象存储服务，本项目采用Java SDK方式，地址：https://developer.qiniu.com/kodo/sdk/1239/java
+
+如何使用?
+
+使用Java SDK操作七牛云需要导入如下maven坐标：
+
+<dependency>
+  <groupId>com.qiniu</groupId>
+  <artifactId>qiniu-java-sdk</artifactId>
+  <version>7.2.0</version>
+</dependency>
+
+ava SDK的所有的功能，都需要合法的授权。授权凭证的签算需要七牛账号下的一对有效的Access Key和Secret Key，这对密钥可以在七牛云管理控制台的个人中心（https://portal.qiniu.com/user/key）获得
+
+Java SDK操作七牛云  工具类放在utils里面

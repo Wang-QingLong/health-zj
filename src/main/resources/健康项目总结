@@ -1,0 +1,119 @@
+总结如下:
+ 首先是搭环境，技术选型，然后是分模块：各司其职，完成各项功能
+ 搭配ssm+dubbo服务框架的环境
+
+--- 1，搭配环境
+ web------>interface        dubbo服务需要
+ service-->interface-->pojo(引入common是因为实体类可能需要工具类)-->common  完成crud
+ dao-->pojo   因为参数或者返回值可能是pojo类型
+
+
+ 各模块职责定位：
+ health_parent：父工程，打包方式为pom，统一锁定依赖的版本，同时聚合其他子模块便于统一执行maven命令
+
+ health_common：通用模块，打包方式为jar，存放项目中使用到的一些工具类和常量类
+
+ health_pojo：打包方式为jar，存放实体类和返回结果类等
+
+ health_dao：持久层模块，打包方式为jar，存放Dao接口和Mapper映射文件等
+
+ health_interface：打包方式为jar，存放服务接口
+
+ health_service：Dubbo服务模块，打包方式为war，存放服务实现类，作为服务提供方，需要部署到tomcat运行
+
+ health_web：打包方式为war，作为Dubbo服务消费方，存放Controller、HTML页面、js、css、spring配置文件等，需要部署到tomcat运行
+
+---2，技术选型：
+
+java基础
+
+html5: 页面布局
+
+bootstrap: 样式框架
+
+vue.js:双向绑定（不要程序员操作dom，秩序要关注数据）
+
+ajax: axios jquery(ajax)
+
+elementui:  Element，一套为开发者、设计师和产品经理准备的基于 Vue 2.0 的桌面端组件库
+
+zookeeper: dubbo注册中心（分布式协调）
+
+dubbo: 解决服务之间调用的问题
+
+springmvc: 快速开发web项目
+
+spring security：权限框架
+
+git: 团队协作工具
+
+idea: ide
+
+maven: 项目构建工具
+
+apache poi: 操作office套装
+
+echarts:  图形报表
+
+mybatis: 数据持久化
+
+mysql: 存储数据
+
+七牛云：存储图片
+
+公众号：可以把我们用户使用的程序放在上面
+
+ecs: 马云家的linux服务器
+
+redis: nosql数据存储
+
+spring cloud: 微服务框架
+
+---3,用到的东西：
+1，PowerDesigner是Sybase公司的一款软件，使用它可以方便地对系统进行分析设计，他几乎包括了数据库模型设计的全过程。利用PowerDesigner可以制作数据流程图、概念数据模型、物理数据模型、面向对象模型。
+在项目设计阶段通常会使用PowerDesigner进行数据库设计。使用PowerDesigner可以更加直观的表现出数据库中表之间的关系，并且可以直接导出相应的建表语句。
+
+2，ElementUI是一套基于VUE2.0的桌面端组件库，ElementUI提供了丰富的组件帮助开发人员快速构建功能强大、风格统一的页面。
+官网地址：http://element-cn.eleme.io/#/zh-CN
+需要引用最新的，可以到官网下
+
+<!-- 引入ElementUI样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入ElementUI组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+常用组件
+
+2.1 Container 布局容器
+
+用于布局的容器组件，方便快速搭建页面的基本结构：
+
+<el-container>：外层容器。当子元素中包含 <el-header> 或 <el-footer> 时，全部子元素会垂直上下排列，否则会水平左右排列
+
+<el-header>：顶栏容器
+
+<el-aside>：侧边栏容器
+
+<el-main>：主要区域容器
+
+<el-footer>：底栏容器
+例如:看resource下的常用组件以及html
+
+3, day02: 如果遇到插入数据库中文乱码请把数据库连接换成这样：
+jdbc:mysql://127.0.0.1:3306/health?useUnicode=true&amp;characterEncoding=utf-8&amp;rewriteBatchedStatements=true&amp;allowMultiQueries=true
+需要注意的点：改了jar里面的东西尽量 clean  install
+
+1、zookeeper启动
+2、项目启动日志文件加上，看不能有严重，Exception然后在访问（有异常不要慌，把错误日志copy出来仔细看找自己熟悉）
+3、调试(debug) 单步调试、跳到下一个断点、进入方法
+4、写完了之后直接DEBUG
+5、页面数据传到controller，controller通过dubbo传到service，service使用mybatis保存数据
+思路：
+1，观察页面结构 2，分析需求 3，找组件(表单) 4，如果是表单加校验规则
+
+4，使用七牛云
+5，使用redis定时清理图片
+6，使用apache poi 操作excel
+7 ,使用elm文件上传
+8，建移动端工程

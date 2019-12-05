@@ -1,0 +1,177 @@
+<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" >
+    <el-form-item label="活动名称" prop="name">
+        <el-input v-model="ruleForm.name"></el-input>
+    </el-form-item>
+    <el-form-item label="活动区域" prop="region">
+        <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
+            <el-option label="区域一" value="shanghai"></el-option>
+            <el-option label="区域二" value="beijing"></el-option>
+        </el-select>
+    </el-form-item>
+    <el-form-item label="活动时间" required>
+
+        <el-form-item prop="date1">
+            <el-date-picker
+                    v-model="ruleForm.date1"
+                    type="datetime"
+                    placeholder="选择日期时间">
+            </el-date-picker>
+        </el-form-item>
+    </el-form-item>
+    <el-form-item label="年龄" prop="age">
+        <el-input v-model.number="ruleForm.age" placeholder="请输入年龄"></el-input>
+    </el-form-item>
+    <el-form-item
+            prop="email"
+            label="邮箱">
+        <el-input v-model="ruleForm.email"></el-input>
+    </el-form-item>
+    <el-form-item
+            prop="url"
+            label="网址">
+        <el-input v-model="ruleForm.url"></el-input>
+    </el-form-item>
+    <el-form-item
+            prop="pwd1"
+            label="密码">
+        <el-input v-model="ruleForm.pwd1" type="password"></el-input>
+    </el-form-item>
+    <el-form-item
+            prop="pwd2"
+            label="确认密码">
+        <el-input v-model="ruleForm.pwd2" type="password"></el-input>
+    </el-form-item>
+
+    <el-form-item label="即时配送" prop="delivery">
+        <el-switch v-model="ruleForm.delivery"></el-switch>
+    </el-form-item>
+    <el-form-item label="活动性质" prop="type">
+        <el-checkbox-group v-model="ruleForm.type">
+            <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
+            <el-checkbox label="地推活动" name="type"></el-checkbox>
+            <el-checkbox label="线下主题活动" name="type"></el-checkbox>
+            <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
+        </el-checkbox-group>
+    </el-form-item>
+    <el-form-item label="特殊资源" prop="resource">
+        <el-radio-group v-model="ruleForm.resource">
+            <el-radio label="线上品牌商赞助"></el-radio>
+            <el-radio label="线下场地免费"></el-radio>
+        </el-radio-group>
+    </el-form-item>
+    <el-form-item label="活动形式" prop="desc">
+        <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+    </el-form-item>
+    <el-form-item>
+        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+        <el-button @click="resetForm('ruleForm')">重置</el-button>
+    </el-form-item>
+</el-form>
+<script>
+    new Vue({
+        el:"#app",
+        data(){
+            return{
+                ruleForm: {
+                    name: '',
+                    region: '',
+                    date1: '',
+                    delivery: false,
+                    type: [],
+                    resource: '',
+                    desc: '',
+                    age:'',
+                    url:'',
+                    pwd1:'',
+                    pwd2:''
+                },
+                rules: {
+                    name: [
+                        { required: true, message: '请输入活动名称', trigger: 'blur' },
+                        { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                    ],
+                    region: [
+                        { required: true, message: '请选择活动区域', trigger: 'change' }
+                    ],
+                    date1: [
+                        { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+                    ],
+                    type: [
+                        { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
+                    ],
+                    resource: [
+                        { required: true, message: '请选择活动资源', trigger: 'change' }
+                    ],
+                    desc: [
+                        { required: true, message: '请填写活动形式', trigger: 'blur' }
+                    ],
+                    age:[
+                        { required: true, message: '年龄不能为空'},
+                        // { type: 'number', message: '年龄必须为数字值'},
+                        { pattern: /^[0-9]*[1-9][0-9]*$/, message: '年龄必须为正整数'}
+                    ],
+                    email:[
+                        { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+                        { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+                    ],
+                    url:[
+                        { required: true, message: '请输入网址', trigger: 'blur' },
+                        { type: 'url', message: '请输入正确的网址', trigger: ['blur', 'change'] }
+                    ],
+                    pwd1:[
+                        { required: true, message: '请输入密码', trigger: 'blur' },
+                        { validator: (rule, value, callBack)=>{
+                            // 只能输入6-20个字母、数字、下划线
+                            var patrn=/^(\w){6,20}$/;
+            if (!patrn.exec(value)){
+                callBack('只能输入6-20个字母、数字、下划线');
+            } else {
+                callBack();
+            }
+        }
+        }
+        ],
+            pwd2:[
+                {required: true, message: '请输入确认密码', trigger: 'blur' },
+                {
+                    validator: (rule,value,callback)=> {
+                    // console.log(this.Vue.$data);
+                    if(value != this.ruleForm.pwd1){
+                callback('两次密码输入不一致');
+            } else {
+                callback();
+            }
+        }
+        }
+        ]
+        }
+        }
+        },
+        methods:{
+            submitForm:function (formName) {
+                this.$refs[formName].validate((flag)=>{
+                    if(flag){
+                        this.$message({
+                            showClose: true,
+                            message: '校验成功',
+                            type: 'success'
+                        });
+                    } else {
+                        this.$message({
+                            showClose: true,
+                            message: '校验失败',
+                            type: 'warning'
+                        });
+                return false;
+            }
+            })
+
+
+            },
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+            }
+        }
+
+    })
+</script>

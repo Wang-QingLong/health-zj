@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+
+    //发送验证码
+    sendValidateCode(){
+        //获取用户输入的手机号
+        var telephone = this.orderInfo.telephone;
+        //校验手机号输入是否正确
+        if (!checkTelephone(telephone)) {
+            this.$message.error('请输入正确的手机号');
+            return false;
+        }
+        validateCodeButton = $("#validateCodeButton")[0];
+        clock = window.setInterval(doLoop, 1000); //一秒执行一次
+    }
+    其中，validateCodeButton和clock是在healthmobile.js文件中定义的属性，doLoop是在healthmobile.js文件中定义的方法
+
+    var clock = '';//定时器对象，用于页面30秒倒计时效果
+    var nums = 30;
+    var validateCodeButton;
+    //基于定时器实现30秒倒计时效果
+    function doLoop() {
+        validateCodeButton.disabled = true;//将按钮置为不可点击
+        nums--;
+        if (nums > 0) {
+            validateCodeButton.value = nums + '秒后重新获取';
+        } else {
+            clearInterval(clock); //清除js定时器
+            validateCodeButton.disabled = false;
+            validateCodeButton.value = '重新获取验证码';
+            nums = 30; //重置时间
+        }
+    }
+    发送ajax请求
+    sendValidateCode(){
+        //获取用户输入的手机号
+        var telephone = this.orderInfo.telephone;
+        //校验手机号输入是否正确
+        if (!checkTelephone(telephone)) {
+            this.$message.error('请输入正确的手机号');
+            return false;
+        }
+        validateCodeButton = $("#validateCodeButton")[0];
+        clock = window.setInterval(doLoop, 1000); //一秒执行一次
+        axios.post("/validateCode/send4Order.do?telephone=" + telephone).then((response) => {
+            if(!response.data.flag){
+            //验证码发送失败
+            this.$message.error('验证码发送失败，请检查手机号输入是否正确');
+        }
+    });
+    }
+
+
+</script>
+
+</body>
+</html>

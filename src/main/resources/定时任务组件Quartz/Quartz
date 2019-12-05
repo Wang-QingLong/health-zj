@@ -1,0 +1,24 @@
+Quartz是Job scheduling（作业调度）领域的一个开源项目，Quartz既可以单独使用也可以跟spring框架整合使用，在实际开发中一般会使用后者。使用Quartz可以开发一个或者多个定时任务，每个定时任务可以单独指定执行的时间，例如每隔1小时执行一次、每个月第一天上午10点执行一次、每个月最后一天下午5点执行一次等。
+
+官网：http://www.quartz-scheduler.org/
+
+maven坐标：
+<dependency>
+  <groupId>org.quartz-scheduler</groupId>
+  <artifactId>quartz</artifactId>
+  <version>2.2.1</version>
+</dependency>
+<dependency>
+  <groupId>org.quartz-scheduler</groupId>
+  <artifactId>quartz-jobs</artifactId>
+  <version>2.2.1</version>
+</dependency>
+
+
+基于Quartz和spring整合的方式使用。具体步骤：
+1）创建maven工程xxx-jobs，打包方式为war，导入Quartz等相关坐标,继承接口模块,导入必须的有关的依赖，导入接口依赖，其他的需要就给
+2)，配置web.xml
+3）配置log4j.properties
+4）配置applicationContext-redis.xml
+5）配置applicationContext-jobs.xml
+6）创建ClearImgJob定时任务类

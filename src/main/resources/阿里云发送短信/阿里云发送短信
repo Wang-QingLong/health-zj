@@ -1,0 +1,43 @@
+导入maven坐标
+在health_common工程的pom.xml文件中导入阿里短信发送的maven坐标
+
+<dependency>
+  <groupId>com.aliyun</groupId>
+  <artifactId>aliyun-java-sdk-core</artifactId>
+  <version>3.3.1</version>
+</dependency>
+<dependency>
+  <groupId>com.aliyun</groupId>
+  <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+  <version>1.0.0</version>
+</dependency>
+
+导入通用组件
+在health_common工程中导入如下通用组件
+
+ValidateCodeUtils工具类： 随机生成验证码工具类
+SMSUtils工具类： 短信发送工具类
+RedisMessageConstant常量类：
+
+
+
+本项目短信发送我们选择的是阿里云提供的短信服务。
+
+短信服务（Short Message Service）是阿里云为用户提供的一种通信服务的能力，支持快速发送短信验证码、短信通知等。 三网合一专属通道，与工信部携号转网平台实时互联。电信级运维保障，实时监控自动切换，到达率高达99%。短信服务API提供短信发送、发送状态查询、短信批量发送等能力，在短信服务控制台上添加签名、模板并通过审核之后，可以调用短信服务API完成短信发送等操作。
+
+2.2 注册阿里云账号
+
+阿里云官网：https://www.aliyun.com/
+
+2.3 设置短信签名
+
+注册成功后，点击登录按钮进行登录。登录后进入短信服务管理页面，选择国内消息菜单：
+
+点击添加签名按钮：
+目前个人用户只能申请适用场景为验证码的签名
+2.4 设置短信模板
+在国内消息菜单页面中，点击模板管理标签页：
+点击添加模板按钮：
+ 设置access keys
+在发送短信时需要进行身份认证，只有认证通过才能发送短信。本小节就是要设置用于发送短信时进行身份认证的key和密钥。鼠标放在页面右上角当前用户头像上，会出现下拉菜单：
+点击accesskeys： 点击开始使用子用户AccessKey按钮： 创建成功，其中AccessKeyID为访问短信服务时使用的ID，AccessKeySecret为密钥。可以设置每日和每月短信发送上限： 由于短信服务是收费服务，所以还需要进行充值才能发送短信：

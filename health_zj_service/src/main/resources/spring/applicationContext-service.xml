@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc.xsd
+         http://code.alibabatech.com/schema/dubbo
+         http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--配置zookeeper地址 :以下有两种方式
+    zookeeper:127.0.0.1:2181
+    zookeeper://127.0.0.1.2181
+    -->
+    <!-- 连接服务注册中心zookeeper ip为zookeeper所在服务器的ip地址-->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"></dubbo:registry>
+    <!--配置名称,就是配置当前项目名称-->
+    <dubbo:application name="health_service"></dubbo:application>
+    <!--配置端口&协议
+        port 默认20880
+          -1 就是随机
+          name="dubbo" dubbo rmi hessian http weebservice rest redis -->
+    <dubbo:protocol name="dubbo" port="-1"></dubbo:protocol>
+    <!-- 扫描指定包，加入@Service注解的类会被发布为服务  -->
+    <dubbo:annotation package="com.itcast.service.impl"></dubbo:annotation>
+</beans>

@@ -1,0 +1,54 @@
+<el-upload action="/ordersetting/upload.do"
+           name="excelFile"
+           :show-file-list="false"
+           :on-success="handleSuccess"
+           :before-upload="beforeUpload">
+    <el-button type="primary">上传文件</el-button>
+</el-upload>
+
+
+
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+
+----------------------最上面的一部分，这是第二部分------------------------------------------
+    handleSuccess(response, file) {
+        if(response.flag){
+            this.$message({
+                message: response.message,
+                type: 'success'
+            });
+        }else{
+            this.$message.error(response.message);
+        }
+    }
+
+    beforeUpload(file){
+        const isXLS = file.type === 'application/vnd.ms-excel';
+        if(isXLS){
+            return true;
+        }
+        const isXLSX = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        if (isXLSX) {
+            return true;
+        }
+        this.$message.error('上传文件只能是xls或者xlsx格式!');
+        return false;
+    }
+
+------------------------------------------------------------------
+</script>
+</body>
+</html>
